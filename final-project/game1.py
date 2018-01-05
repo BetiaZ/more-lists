@@ -39,10 +39,10 @@ class Character(object):
                 print(f"""{k} --- {v}""")
         # if this function is called, the status will be printed
         def list_status(self):
-            print(f"""
+            print(f""" \n
             Day --- {self.day}
             Distance until next checkpoint --- {self.distance_left}
-            Health --- {self.health}
+            Health --- {self.health} \n
             """)
         # the character walks forward, and different scenario occurs at each distance
         def list_walk(self, miles = 5):
@@ -62,36 +62,38 @@ class Character(object):
 #defining the character
 a = Character(input("""What is your name? \n - """))
 
-#actions
-b = int(input(f"""What would you like to do?
+checkpoints = [50, 40, 30, 20, 10, 0]
+def ckpt1():
+    b = int(input(f"""What would you like to do?
 1. Inventory
 2. Status
 3. Go forward (miles left: {a.distance_left})\n - """))
-
 #using if and elif statements to have different options and results
-while a.total_distance == 50:
     if b == 1:
         a.list_inventory()
-        break
+        ckpt1()
     elif b == 2:
         a.list_status()
-        break
+        ckpt1()
     elif b == 3:
         a.list_walk()
     else:
-        print("""invalid input. try again \n - """)
+        print("""invalid input.""")
+        ckpt1()
+
+if a.total_distance == 50:
+    ckpt1()
 
 
-
-#first scenario occurs after walking the first time, or when the total distance left is 95
-while a.total_distance == 45:
+#first scenario occurs after walking the first time, or when the total distance left is 45
+def ckpt2():
     c = int(input("""You approach the edge of the dense forest.
-On the outskirts of the trees seems to be a sketchy hut with an old man sitting in a lawn chair outside it.
-What do you do?
-1. Inventory
-2. Status
-3. Approach the sketchy vendor
-4. Keep on walking - you don't want to cause any trouble \n - """))
+    On the outskirts of the trees seems to be a sketchy hut with an old man sitting in a lawn chair outside it.
+    What do you do?
+    1. Inventory
+    2. Status
+    3. Approach the sketchy vendor
+    4. Keep on walking - you don't want to cause any trouble \n - """))
     if c == 1:
         a.list_inventory()
     elif c == 2:
@@ -101,28 +103,35 @@ What do you do?
         'Would you like to buy something?' he says. 'Here are my prices:'
             1. food --- $1 per pound
             2. clothes --- $3 per piece
-            3. life advice --- $5\n - """))
+            3. stay overnight --- $10\n - """))
         if d == 1:
             pounds = int(input("How many pounds? (will be rounded to the nearest whole #) \n - "))
             cost_f = pounds * 1
-            self.inventory['food'] += pounds
-            self.inventory['money'] -= cost_f
-            print(f"""You bought {pounds} pounds of food. You now have {self.inventory['money']} dollars.""")
+            a.inventory['food'] += pounds
+            a.inventory['money'] -= cost_f
+            print(f"""You bought {pounds} pounds of food. You now have {inventory['money']} dollars.""")
         elif d == 2:
             pieces = int(input("How many? (will be rounded to the nearest whole #) \n - "))
             cost_c = pieces * 3
-            self.inventory['clothes'] += pieces
-            self.inventory['money'] -= cost_c
-            print(f"""You bought {pieces} pieces of clothing. You now have {self.inventory['money']} dollars.""")
+            a.inventory['clothes'] += pieces
+            a.inventory['money'] -= cost_c
+            print(f"""You bought {pieces} pieces of clothing. You now have {inventory['money']} dollars.""")
+        elif d == 3:
+            a.day -= 1
+            print(f"""You stayed in the sketchy hut overnight. Even though the bed was made of hay, you feel rested.
+            It is now Day {day}. You have {inventory['money']} dollars left.""")
+            a.list_status()
     elif c == 4:
         a.list_walk()
-        break
     else:
         print("""invalid input. try again \n - """)
 
-#if a.distanceleft == 40:
-#if a.distanceleft == 30:
+while a.total_distance == 45:
+    print("You have no food and are starving.\n")
+    ckpt1()
 
+while a.total_distance == 40:
+    ckpt2()
 
-# a.inventory{'food'} += 1
+# a.inventory['food'] += 1
 
